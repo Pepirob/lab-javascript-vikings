@@ -83,5 +83,41 @@ class War {
     );
     return result;
   }
-  showStatus() {}
+
+  // bonus
+
+  strike(strikerArr, receiverArr) {
+    const randomizer = (num) => {
+      return Math.floor(Math.random() * num);
+    };
+    const result = receiverArr[randomizer(receiverArr.length)].receiveDamage(
+      strikerArr[randomizer(strikerArr.length)].strength
+    );
+    receiverArr.forEach((receiver, index) =>
+      receiver.health <= 0 ? receiverArr.splice(index, 1) : null
+    );
+
+    return console.log(result);
+  }
+  showStatus() {
+    if (this.saxonArmy.length <= 0) {
+      return "Vikings have won the war of the century!";
+    }
+    if (this.vikingArmy.length <= 0) {
+      return "Saxons have fought for their lives and survived another day...";
+    }
+    if (this.saxonArmy.length && this.vikingArmy.length) {
+      return "Vikings and Saxons are still in the thick of battle.";
+    }
+  }
 }
+
+const viking = new Viking("pepe", 100, 30);
+const saxon = new Saxon(100, 30);
+const game = new War();
+game.addSaxon(saxon);
+game.addViking(viking);
+game.strike(game.saxonArmy, game.vikingArmy);
+game.strike(game.vikingArmy, game.saxonArmy);
+
+console.log(viking, saxon);
